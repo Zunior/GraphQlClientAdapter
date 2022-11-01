@@ -22,7 +22,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 @SpringBootTest
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 class GraphQlFetchAdapterTest {
     @Value("${gintoGraphQl.username}")
     private String gintoGraphQlUsername;
