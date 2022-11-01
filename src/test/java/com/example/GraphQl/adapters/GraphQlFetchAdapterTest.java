@@ -10,14 +10,24 @@ import com.github.k0kubun.builder.query.graphql.GraphQLQueryBuilder;
 import org.apache.http.client.CredentialsProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 
+@SpringBootTest
+@TestPropertySource(locations = "classpath:application.properties")
 class GraphQlFetchAdapterTest {
+    @Value("${gintoGraphQl.username}")
+    private String gintoGraphQlUsername;
+    @Value("${gintoGraphQl.password}")
+    private String gintoGraphQlPassword;
 
     static String serviceUrl;
     static CredentialsProvider provider;
@@ -25,7 +35,11 @@ class GraphQlFetchAdapterTest {
     @BeforeAll
     static void predefinedConfiguration() {
         serviceUrl = "https://api.dev.ginto.guide/graphql";
-        provider = UtilUtil.getBasicCredentialsProvider("mario.capitelli@guidle.com", "B2s6deFYpdWA9Pm");
+    }
+
+    @BeforeEach
+    public void configureProvider() {
+        provider = UtilUtil.getBasicCredentialsProvider(gintoGraphQlUsername, gintoGraphQlPassword);
     }
 
     @Test
